@@ -11,7 +11,20 @@ describe('Testes da função getOpeningHours', () => {
   it('Testes de AM-PM', (() => {
     expect(getOpeningHours('Thursday', '10:00-AM')).toBe('The zoo is open');
     expect(getOpeningHours('tuesday', '10:00-PM')).toBe(closed);
+    expect(getOpeningHours('Thursday', '12:00-AM')).toBe(closed);
+    expect(getOpeningHours('Thursday', '12:00-PM')).toBe('The zoo is open');
   }));
+  it('', () => {
+    expect(getOpeningHours()).toEqual({
+      Tuesday: { open: 8, close: 6 },
+      Wednesday: { open: 8, close: 6 },
+      Thursday: { open: 10, close: 8 },
+      Friday: { open: 10, close: 8 },
+      Saturday: { open: 8, close: 10 },
+      Sunday: { open: 8, close: 8 },
+      Monday: { open: 0, close: 0 },
+    });
+  });
   it('Teste de casos e erros e mensagem deles', (() => {
     expect(() => getOpeningHours('Thursday', '10:00-XX')).toThrow(/^The abbreviation must be 'AM' or 'PM'$/);
     expect(() => getOpeningHours('Thursday', 'e:00-PM')).toThrow(/^The hour should represent a number$/);
